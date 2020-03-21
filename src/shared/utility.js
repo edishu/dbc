@@ -11,3 +11,10 @@ export const dateToStr = (date) => {
     
     return fullDate.join("-");
 }
+
+export const updateObject = (oldObject, updatedProperties) => {
+    return {
+        ...oldObject,
+        ...updatedProperties
+    }
+};

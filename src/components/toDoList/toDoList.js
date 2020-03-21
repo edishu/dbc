@@ -8,12 +8,13 @@ import './toDoList.module.css';
 const toDoList = (props) => {
 
     const rows = props.toDoList.tasks.map(task => (
-        <tr onClick={() => console.log('here')}>
+        <tr key={task.start} onClick={() => console.trace('toDoListItem clicked')}>
             <td>{task.start}</td>
             <td>{task.end}</td>
-            <td>{task.task}</td>
+            <td>{task.taskDetail}</td>
         </tr>
     ));
+
     return (
         <Fragment>
             <h1>{props.selectedDate}</h1>

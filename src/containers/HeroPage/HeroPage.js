@@ -21,16 +21,19 @@ class HeroPage extends Component {
 
     doneAddingTask = () => {
         this.setState({addingTask: false});
-    }
+	}
+	
+	handleDateClick = (info) => {
+		this.props.onDateSelected(info.dateStr);
+	}
 
     render() {
-        let toDoList = this.props.toDoLists.filter(lstObj => lstObj.date === this.props.dateSelected);
-        if (toDoList.length === 0) {
-            toDoList = [{
-                date: this.props.dateSelected,
+        let toDoList = this.props.toDoLists[this.props.dateSelected];
+        if (!toDoList) {
+            toDoList = {
                 tasks: [],
                 status: "current"
-            }]
+            }
         }
 
         return (
@@ -48,13 +51,13 @@ class HeroPage extends Component {
                         <Col sm={4}>
                             <ToDoList 
                             selectedDate={this.props.dateSelected}
-                            toDoList={toDoList[0]}/>
+                            toDoList={toDoList}/>
                             <Button variant="primary" onClick={this.startAddingTask}>
                                 Add Task
                             </Button>
                         </Col>
                         <Col sm={8}>
-                            <MainCalendar/>
+                            <MainCalendar dateClicked={this.handleDateClick}/>
                         </Col>
                     </Row>
                 </Container>
@@ -72,7 +75,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onTaskAdded: (taskInfo) => dispatch(actions.addTask(taskInfo)),
+		onTaskAdded: (taskInfo) => dispatch(actions.addTask(taskInfo)),
+		onDateSelected: (selectedDate) => dispatch(actions.selectDate(selectedDate))
     };
 };
 

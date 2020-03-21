@@ -19,7 +19,7 @@ const mainCalender = (props) => {
         <FullCalendar 
             defaultView="dayGridMonth" 
             plugins={[ dayGridPlugin, interactionPlugin]} 
-            dateClick={handleDateClick}
+            dateClick={props.dateClicked}
             handleWindowResize="true"/>      
     );
 }

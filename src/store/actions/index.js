@@ -1,3 +1,4 @@
 export {
-    addTask
+	addTask,
+	selectDate
 } from './heroPage';
