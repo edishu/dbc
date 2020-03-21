@@ -4,7 +4,24 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+
+// Redux Related imports
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import thunk from 'redux-thunk';
+
+// User defined modules import
+import heroPageReducer from './store/reducers/heroPage';
+
+const rootReducer = combineReducers({
+    heroPage: heroPageReducer,
+});
+
+const myStore = createStore(rootReducer);
+
+ReactDOM.render(<Provider store={myStore}>
+                    <App />
+                </Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
