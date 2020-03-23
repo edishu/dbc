@@ -12,25 +12,36 @@ import * as actions from '../../store/actions/index';
 
 class HeroPage extends Component {
     state = {
-        addingTask: false,
+		addingTask: false,
+        updatingTask: false,
+        updatingId: null
     }
+
+    handleDateClick = (clickedDateinfo) => {
+		this.props.onDateSelected(clickedDateinfo.dateStr);
+	}
 
     startAddingTask = () => {
         this.setState({addingTask: true});
-    }
-
-    doneAddingTask = () => {
-        this.setState({addingTask: false});
 	}
 	
-	handleDateClick = (info) => {
-		this.props.onDateSelected(info.dateStr);
+	startUpdatingTask = (idOfTask) => {
+        this.setState({updatingTask: true, updatingId: idOfTask});        
+    }
+
+    doneAddingUpdatingTask = () => {
+        this.setState({addingTask: false, updatingTask: false, updatingId: null});
+	}
+	
+	handleTaskClick = (info) => {
+		this.props.onTaskUpdated(info);
 	}
 
     render() {
-        let toDoList = this.props.toDoLists[this.props.dateSelected];
-        if (!toDoList) {
-            toDoList = {
+        // console.log("[HeroPage] render called")
+        let dateTaskAndStatus = this.props.toDoLists[this.props.dateSelected];
+        if (!dateTaskAndStatus) {
+            dateTaskAndStatus = {
                 tasks: [],
                 status: "current"
             }
@@ -40,18 +51,33 @@ class HeroPage extends Component {
             <Fragment>
                 <Container>
                     <MyModal 
-                    show={this.state.addingTask}
-                    onHide={this.doneAddingTask}
+                    show={this.state.addingTask || this.state.updatingTask}
+                    onHide={this.doneAddingUpdatingTask}
+
+                    addingTask={this.state.addingTask}
+                    updatingTask={this.state.updatingTask}
+                    updateId={this.state.updatingId} 
                     selectedDate={this.props.dateSelected} 
                     addTask={(taskInfo) => {
-                        this.doneAddingTask();
                         this.props.onTaskAdded(taskInfo);
-                        }}/>
+                        this.doneAddingUpdatingTask();
+                        }}
+                    updateTask={(changeInfo) => {
+                        this.props.onTaskUpdated(changeInfo);
+                        this.doneAddingUpdatingTask();
+                        }}
+                    removeTask={(removeInfo) => {
+                        this.props.onTaskRemoved(removeInfo);
+                        this.doneAddingUpdatingTask();
+                    }}
+                        />
+                    
                     <Row>
                         <Col sm={4}>
                             <ToDoList 
                             selectedDate={this.props.dateSelected}
-                            toDoList={toDoList}/>
+                            dateTaskAndStatus={dateTaskAndStatus}
+							updateTask={this.startUpdatingTask}/>
                             <Button variant="primary" onClick={this.startAddingTask}>
                                 Add Task
                             </Button>
@@ -76,7 +102,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
 		onTaskAdded: (taskInfo) => dispatch(actions.addTask(taskInfo)),
-		onDateSelected: (selectedDate) => dispatch(actions.selectDate(selectedDate))
+		onDateSelected: (selectedDate) => dispatch(actions.selectDate(selectedDate)),
+        onTaskUpdated: (changeInfo) => dispatch(actions.updateTask(changeInfo)),
+        onTaskRemoved: (removeInfo) => dispatch(actions.removeTask(removeInfo)),
     };
 };
 

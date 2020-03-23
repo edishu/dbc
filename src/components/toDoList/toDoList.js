@@ -7,13 +7,16 @@ import './toDoList.module.css';
 
 const toDoList = (props) => {
 
-    const rows = props.toDoList.tasks.map(task => (
-        <tr key={task.start} onClick={() => console.trace('toDoListItem clicked')}>
-            <td>{task.start}</td>
-            <td>{task.end}</td>
+    const rows = props.dateTaskAndStatus.tasks.map(task => {
+        // console.log("todoList row genetation", task.id);
+        return (
+        <tr key={task.id} onClick={() => props.updateTask(task.id)}>
+            <td>{`${task.start} ${task.startAMPM}`}</td>
+            <td>{`${task.end} ${task.endAMPM}`}</td>
             <td>{task.taskDetail}</td>
         </tr>
-    ));
+    )}
+    );
 
     return (
         <Fragment>
@@ -29,7 +32,7 @@ const toDoList = (props) => {
                 <tbody>
                 {rows}
                 </tbody>
-        </Table>
+            </Table>
         </Fragment>
       );
 };
