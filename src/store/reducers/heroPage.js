@@ -24,7 +24,7 @@ const addTask = (state, action) => {
 	if (!state.toDoLists[action.taskInfo.date]) {
 		toDoLists[action.taskInfo.date] = {
 			tasks: [newTask],
-			status: "current"
+			status: "fail"
 		};
 	} else {
 		const newTasks = dateTaskAndStatus.tasks.concat(newTask);

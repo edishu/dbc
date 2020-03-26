@@ -1,2 +1,14 @@
 @import '~@fullcalendar/core/main.css';
 @import '~@fullcalendar/daygrid/main.css';
+
+.fc-highlight {
+    background-color: blue;
+}
+
+.day-success {
+    background-color: green;
+}
+
+.day-fail {
+    background-color: red;
+}

@@ -8,11 +8,24 @@ import './toDoList.module.css';
 const toDoList = (props) => {
 
     const rows = props.dateTaskAndStatus.tasks.map(task => {
-        // console.log("todoList row genetation", task.id);
+        const startHourRaw = task.start.getHours();
+        const endHourRaw = task.end.getHours();
+        const startMinuteRaw = task.start.getMinutes().toString();
+        const endMinuteRaw = task.end.getMinutes().toString();
+
+        const startHourUsed = startHourRaw>=12 ? startHourRaw-12 : startHourRaw;
+        const endHourUsed = endHourRaw>=12 ? endHourRaw-12 : endHourRaw;
+
+        const startMinuteUsed = startMinuteRaw.length === 2 ? startMinuteRaw : "0" + startMinuteRaw
+        const endMinuteUsed = endMinuteRaw.length === 2 ? endMinuteRaw : "0" + endMinuteRaw
+
+        const startAMPM = startHourRaw>=12 ? "PM" : "AM";
+        const endAMPM = endHourRaw>=12 ? "PM" : "AM";
+
         return (
         <tr key={task.id} onClick={() => props.updateTask(task.id)}>
-            <td>{`${task.start} ${task.startAMPM}`}</td>
-            <td>{`${task.end} ${task.endAMPM}`}</td>
+            <td>{`${startHourUsed}:${startMinuteUsed} ${startAMPM}`}</td>
+            <td>{`${endHourUsed}:${endMinuteUsed} ${endAMPM}`}</td>
             <td>{task.taskDetail}</td>
         </tr>
     )}

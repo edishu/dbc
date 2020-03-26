@@ -1,14 +1,19 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Modal, Button, Form, Col } from 'react-bootstrap';
+import classes from './modal.module.css';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+} from '@material-ui/pickers';
 
 class MyModal extends Component {
 
 	state = {
-		start: null,
-		startAMPM: "AM",
-		end: null,
-		endAMPM: "AM",
+		start: new Date(),
+		end: new Date(),
 		taskDetail: null,
 		completed: false,
 		getDerivedStateFromPropsCalled: false
@@ -16,10 +21,8 @@ class MyModal extends Component {
 
 	setStateToInit = () => {
 		this.setState({
-			start: null,
-			startAMPM: "AM",
-			end: null,
-			endAMPM: "AM",
+			start: new Date(),
+			end: new Date(),
 			taskDetail: null,
 			completed: false,
 			getDerivedStateFromPropsCalled: false
@@ -35,9 +38,7 @@ class MyModal extends Component {
 		this.props.addTask({
 			date: this.props.selectedDate,
 			task: {start: this.state.start,
-					startAMPM: this.state.startAMPM,
 					end:  this.state.end,
-					endAMPM: this.state.endAMPM,
 					taskDetail: this.state.taskDetail,
 					completed: this.state.completed}
 		});
@@ -50,9 +51,7 @@ class MyModal extends Component {
 			date: this.props.selectedDate,
 			id: this.props.updateId,
 			task: {start: this.state.start,
-					startAMPM: this.state.startAMPM,
 					end:  this.state.end,
-					endAMPM: this.state.endAMPM,
 					taskDetail: this.state.taskDetail,
 					completed: this.state.completed}
 		});
@@ -105,72 +104,55 @@ class MyModal extends Component {
 				<Modal.Body>
 				<Form>
 					<Form.Row>
-						<Col sm={4}>
-							<Form.Group controlId="formGridStartTime">
-							<Form.Label>Start</Form.Label>
-							<Form.Control 
-							type="text" 
-							placeholder="Start Time"
-							defaultValue={this.state.start ? this.state.start : null} 
-							onChange={event => this.setState({start: event.target.value})}
-							/>
-							</Form.Group>
-						</Col>
-						<Col sm={2}>
-							<Form.Group controlId="formGridStartTimeAMPM">
-							<Form.Label>AM/PM</Form.Label>
-							<Form.Control 
-								as="select" 
-								defaultValue={this.state.startAMPM}
-								onChange={event => this.setState({startAMPM: event.target.value})}>
-							<option>AM</option>
-							<option>PM</option>
-							</Form.Control>
-							</Form.Group>
-						</Col>
-
-						<Col sm={4}>
-							<Form.Group controlId="formGridEndTime">
-							<Form.Label>End</Form.Label>
-							<Form.Control 
-								type="text" 
-								placeholder="End Time"
-								defaultValue={this.state.end ? this.state.end : null}
-								onChange={event => this.setState({end: event.target.value})}/>
-							</Form.Group>
-						</Col>
-
-						<Col sm={2}>
-							<Form.Group controlId="formGridEndTimeAMPM">
-							<Form.Label>AM/PM</Form.Label>
-							<Form.Control 
-								as="select" 
-								defaultValue={this.state.endAMPM}
-								onChange={event => this.setState({endAMPM: event.target.value})}>
-							<option>AM</option>
-							<option>PM</option>
-							</Form.Control>
-							</Form.Group>
-						</Col>
+						<MuiPickersUtilsProvider utils={DateFnsUtils}>
+							<Col sm={5}>
+        						<KeyboardTimePicker
+									margin="normal"
+									id="time-picker"
+									label="Start Time"
+									value={this.state.start}
+									onChange={date => this.setState({start: date})}
+									KeyboardButtonProps={{
+										'aria-label': 'change time',
+									}}
+									/>
+							</Col>
+							<Col sm={5}>
+								<KeyboardTimePicker
+									margin="normal"
+									id="time-picker"
+									label="End Time"
+									value={this.state.end}
+									onChange={date => this.setState({end: date})}
+									KeyboardButtonProps={{
+										'aria-label': 'change time',
+									}}
+									/>
+							</Col>
+    					</MuiPickersUtilsProvider>
 					</Form.Row>
-
-					<Form.Row>
-					<Form.Group as={Col} controlId="formGridTask">
-						<Form.Label>Task</Form.Label>
-						<Form.Control 
-							placeholder="Add testing to project" 
-							defaultValue={this.state.taskDetail ? this.state.taskDetail : null}
-							onChange={event => this.setState({taskDetail: event.target.value})}/>
-					</Form.Group>
-					<Form.Group as={Col} controlId="formGridTaskCompletion">
-						<Form.Check 
-							type="switch" 
-							id="isComplete"
-							label="Mark Completed"
-							checked={this.state.completed}
-							onChange={() => {
-								this.setState({completed: !this.state.completed})}} />
-					</Form.Group>
+					<Form.Row className="align-items-center">
+						<Col sm={7}>
+							<Form.Group controlId="formGridTask">
+								<Form.Label>Task</Form.Label>
+								<Form.Control 
+									placeholder="Add testing to project" 
+									defaultValue={this.state.taskDetail ? this.state.taskDetail : null}
+									onChange={event => this.setState({taskDetail: event.target.value})}/>
+							</Form.Group>
+						</Col>
+						<Col sm={1}></Col>
+						<Col sm={4} className="align-items-center " >
+							<Form.Group controlId="formGridTaskCompletion" className={classes.fixMargin}>
+								<Form.Check 
+									type="switch" 
+									id="isComplete"
+									label="Mark Completed"
+									checked={this.state.completed}
+									onChange={() => {
+										this.setState({completed: !this.state.completed})}} />
+							</Form.Group>
+						</Col>
 					</Form.Row>
 
 				</Form>

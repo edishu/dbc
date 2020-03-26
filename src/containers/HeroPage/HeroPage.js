@@ -14,8 +14,11 @@ class HeroPage extends Component {
     state = {
 		addingTask: false,
         updatingTask: false,
-        updatingId: null
+        updatingId: null,
+        dateSuccessStatus: {},
     }
+
+    // Utility class methods
 
     handleDateClick = (clickedDateinfo) => {
 		this.props.onDateSelected(clickedDateinfo.dateStr);
@@ -35,7 +38,16 @@ class HeroPage extends Component {
 	
 	handleTaskClick = (info) => {
 		this.props.onTaskUpdated(info);
-	}
+    }
+    
+    // Lifcycle Methods
+    static getDerivedStateFromProps(props) {
+        let newDateSuccessStatus  = {}
+        for(const date in props.toDoLists){
+            newDateSuccessStatus[date] = props.toDoLists[date].status;
+        }
+        return {dateSuccessStatus: newDateSuccessStatus};
+    }
 
     render() {
         // console.log("[HeroPage] render called")
@@ -43,10 +55,10 @@ class HeroPage extends Component {
         if (!dateTaskAndStatus) {
             dateTaskAndStatus = {
                 tasks: [],
-                status: "current"
+                status: "fail"
             }
         }
-
+   
         return (
             <Fragment>
                 <Container>
@@ -83,7 +95,9 @@ class HeroPage extends Component {
                             </Button>
                         </Col>
                         <Col sm={8}>
-                            <MainCalendar dateClicked={this.handleDateClick}/>
+                            <MainCalendar 
+                            dateClicked={this.handleDateClick} 
+                            dateSuccessStatus={this.state.dateSuccessStatus}/>
                         </Col>
                     </Row>
                 </Container>
