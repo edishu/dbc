@@ -2,13 +2,13 @@
 @import '~@fullcalendar/daygrid/main.css';
 
 .fc-highlight {
-    background-color: blue;
+    background-color: #7abaff;
 }
 
 .day-success {
-    background-color: green;
+    background-color: #c3e6cb;
 }
 
 .day-fail {
-    background-color: red;
+    background-color: #ed969e;
 }

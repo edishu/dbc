@@ -3,4 +3,6 @@ export {
 	selectDate,
 	updateTask,
 	removeTask,
+	saveLists,
+	retriveLists
 } from './heroPage';

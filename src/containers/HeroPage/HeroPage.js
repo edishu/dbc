@@ -49,6 +49,11 @@ class HeroPage extends Component {
         return {dateSuccessStatus: newDateSuccessStatus};
     }
 
+    componentDidMount = () => {
+        console.log("[Hero Page]: componentDidMount");
+        this.props.onRetriveToDoLists();
+    }
+
     render() {
         // console.log("[HeroPage] render called")
         let dateTaskAndStatus = this.props.toDoLists[this.props.dateSelected];
@@ -90,9 +95,18 @@ class HeroPage extends Component {
                             selectedDate={this.props.dateSelected}
                             dateTaskAndStatus={dateTaskAndStatus}
 							updateTask={this.startUpdatingTask}/>
-                            <Button variant="primary" onClick={this.startAddingTask}>
-                                Add Task
-                            </Button>
+                            <Row>
+                                <Col>
+                                    <Button variant="primary" onClick={this.startAddingTask}>
+                                    Add Task
+                                    </Button>
+                                </Col>
+                                <Col>
+                                    <Button variant="success" onClick={this.props.onSaveToDoLists}>
+                                    Save Tasks
+                                    </Button>
+                                </Col>
+                            </Row>
                         </Col>
                         <Col sm={8}>
                             <MainCalendar 
@@ -119,6 +133,8 @@ const mapDispatchToProps = dispatch => {
 		onDateSelected: (selectedDate) => dispatch(actions.selectDate(selectedDate)),
         onTaskUpdated: (changeInfo) => dispatch(actions.updateTask(changeInfo)),
         onTaskRemoved: (removeInfo) => dispatch(actions.removeTask(removeInfo)),
+        onSaveToDoLists: () => dispatch(actions.saveLists()),
+        onRetriveToDoLists: () => dispatch(actions.retriveLists()),
     };
 };
 

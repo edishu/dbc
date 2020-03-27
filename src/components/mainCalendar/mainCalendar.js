@@ -9,7 +9,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 
 // Import user defined modules
 import './mainCalendar.css';
-import {dateToStr, updateObject} from '../../shared/utility';
+import {dateToStr} from '../../shared/utility';
 
 
 class mainCalender extends Component {

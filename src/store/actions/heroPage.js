@@ -27,3 +27,15 @@ export const removeTask = (removeInfo) => {
         removeInfo: removeInfo
     }
 }
+
+export const saveLists = () => {
+    return {
+        type: actionTypes.SAVE_LISTS,
+    }
+}
+
+export const retriveLists = () => {
+    return {
+        type: actionTypes.RETRIVE_LISTS,
+    }
+}

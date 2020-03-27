@@ -2,11 +2,28 @@ import * as actionTypes from '../actions/actionTypes';
 import {dateToStr, updateObject} from '../../shared/utility';
 import { v4 as uuidv4 } from 'uuid';
 
+// Global Constants
+const SUCCESS_CRITERIA = 0.8;
+// Initial State
 const initialState = {
     toDoLists: {},
     selectedDate: dateToStr(new Date()),
 }
 
+// Helper Functions
+const evaluateSuccess = (dtTskAndStatus) => {
+	const tasksNum = dtTskAndStatus.tasks.length;
+	const completedTasks = dtTskAndStatus.tasks.reduce((acc, el) => {
+		return acc + (el.completed ? 1 : 0);
+	}, 0)
+	if (tasksNum>0 && completedTasks/tasksNum >= SUCCESS_CRITERIA) {
+		dtTskAndStatus.status = "success";
+	} else {
+		dtTskAndStatus.status = "fail";
+	}
+}
+
+// Reducer Functions
 const selectDate = (state, action) => {
 	return updateObject(state, {selectedDate: action.newDate});
 }
@@ -34,6 +51,7 @@ const addTask = (state, action) => {
 			return 0
 		});
 		dateTaskAndStatus = updateObject(dateTaskAndStatus, {tasks: newTasks});
+		evaluateSuccess(dateTaskAndStatus);
 		toDoLists[action.taskInfo.date] = dateTaskAndStatus;
 	}
 	
@@ -52,6 +70,7 @@ const updateTask = (state, action) => {
 	task = updateObject(task, action.changeInfo.task);
 	tasks[idxOfTask] = task;
 	dateTaskAndStatus = updateObject(dateTaskAndStatus, {tasks: tasks});
+	evaluateSuccess(dateTaskAndStatus);
 	toDoLists[action.changeInfo.date] = dateTaskAndStatus;
 	return updateObject(state, {toDoLists: toDoLists});
 }
@@ -64,8 +83,32 @@ const removeTask = (state, action) => {
 
 	tasks.splice(idxOfTask, 1);
 	dateTaskAndStatus = updateObject(dateTaskAndStatus, {tasks: tasks});
-	toDoLists[action.removeInfo.date] = dateTaskAndStatus;
+	evaluateSuccess(dateTaskAndStatus);
+
+	//Remove date from dateTaskAndStatus if no tasks are left
+	if (dateTaskAndStatus.tasks.length === 0) {
+		delete toDoLists[action.removeInfo.date];
+	} else {
+		toDoLists[action.removeInfo.date] = dateTaskAndStatus;
+	}
 	return updateObject(state, {toDoLists: toDoLists});
+}
+
+const saveLists = (state) => {
+	localStorage.setItem('toDoLists', JSON.stringify(state.toDoLists));
+	return state;
+}
+
+const retriveLists = (state) => {
+	let toDoLists = {...state.toDoLists};
+	const storedToDoLists = JSON.parse(localStorage.getItem('toDoLists'));
+	console.log(storedToDoLists);
+	if (storedToDoLists) {
+		toDoLists = updateObject(toDoLists, storedToDoLists);
+		return updateObject(state, {toDoLists: toDoLists});
+	} else {
+		return state;
+	}
 }
 
 const reducer = (state = initialState, action) => {
@@ -78,6 +121,10 @@ const reducer = (state = initialState, action) => {
 			return updateTask(state, action);
 		case actionTypes.REMOVE_TASK:
 			return removeTask(state, action);
+		case actionTypes.SAVE_LISTS:
+			return saveLists(state);
+		case actionTypes.RETRIVE_LISTS:
+			return retriveLists(state);
         default:
             return state;
     }
