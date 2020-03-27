@@ -1,6 +1,8 @@
 import * as actionTypes from '../actions/actionTypes';
 import {dateToStr, updateObject} from '../../shared/utility';
 import { v4 as uuidv4 } from 'uuid';
+import serialize from 'serialize-javascript';
+import {deserialize} from '../../shared/utility';
 
 // Global Constants
 const SUCCESS_CRITERIA = 0.8;
@@ -95,13 +97,13 @@ const removeTask = (state, action) => {
 }
 
 const saveLists = (state) => {
-	localStorage.setItem('toDoLists', JSON.stringify(state.toDoLists));
+	localStorage.setItem('toDoLists', serialize(state.toDoLists));
 	return state;
 }
 
 const retriveLists = (state) => {
 	let toDoLists = {...state.toDoLists};
-	const storedToDoLists = JSON.parse(localStorage.getItem('toDoLists'));
+	const storedToDoLists = deserialize(localStorage.getItem('toDoLists'));
 	console.log(storedToDoLists);
 	if (storedToDoLists) {
 		toDoLists = updateObject(toDoLists, storedToDoLists);

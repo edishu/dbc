@@ -18,3 +18,7 @@ export const updateObject = (oldObject, updatedProperties) => {
         ...updatedProperties
     }
 };
+
+export const deserialize = serializedJavascript => {
+    return eval('(' + serializedJavascript + ')');
+}

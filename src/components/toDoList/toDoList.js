@@ -10,8 +10,8 @@ const toDoList = (props) => {
         const startMinuteRaw = task.start.getMinutes().toString();
         const endMinuteRaw = task.end.getMinutes().toString();
 
-        const startHourUsed = startHourRaw>=12 ? startHourRaw-12 : startHourRaw;
-        const endHourUsed = endHourRaw>=12 ? endHourRaw-12 : endHourRaw;
+        const startHourUsed = startHourRaw>12 ? startHourRaw-12 : startHourRaw;
+        const endHourUsed = endHourRaw>12 ? endHourRaw-12 : endHourRaw;
 
         const startMinuteUsed = startMinuteRaw.length === 2 ? startMinuteRaw : "0" + startMinuteRaw
         const endMinuteUsed = endMinuteRaw.length === 2 ? endMinuteRaw : "0" + endMinuteRaw

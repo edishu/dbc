@@ -50,7 +50,6 @@ class HeroPage extends Component {
     }
 
     componentDidMount = () => {
-        console.log("[Hero Page]: componentDidMount");
         this.props.onRetriveToDoLists();
     }
 
