@@ -2,6 +2,9 @@
 import React, {Fragment}  from 'react';
 import {Table} from 'react-bootstrap';
 
+import classes from './toDoList.module.css';
+import {changeDateFormat} from '../../shared/utility';
+
 const toDoList = (props) => {
 
     const rows = props.dateTaskAndStatus.tasks.map(task => {
@@ -37,19 +40,20 @@ const toDoList = (props) => {
 
     return (
         <Fragment>
-            <h1>{props.selectedDate}</h1>
-            <Table striped bordered hover >
-                <thead>
-                <tr>
-                    <th>Start</th>
-                    <th>End</th>
-                    <th>Task</th>
-                </tr>
-                </thead>
-                <tbody>
-                {rows}
-                </tbody>
-            </Table>
+            <div className={classes.myTable}>
+                <Table striped bordered hover >
+                    <thead>
+                    <tr>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Task</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {rows}
+                    </tbody>
+                </Table>
+            </div>
         </Fragment>
       );
 };

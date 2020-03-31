@@ -3,6 +3,7 @@ import {dateToStr, updateObject} from '../../shared/utility';
 import { v4 as uuidv4 } from 'uuid';
 import serialize from 'serialize-javascript';
 import {deserialize} from '../../shared/utility';
+import cloneDeep from 'lodash.clonedeep';
 
 // Global Constants
 const SUCCESS_CRITERIA = 0.8;
@@ -104,13 +105,35 @@ const saveLists = (state) => {
 const retriveLists = (state) => {
 	let toDoLists = {...state.toDoLists};
 	const storedToDoLists = deserialize(localStorage.getItem('toDoLists'));
-	console.log(storedToDoLists);
 	if (storedToDoLists) {
 		toDoLists = updateObject(toDoLists, storedToDoLists);
 		return updateObject(state, {toDoLists: toDoLists});
 	} else {
 		return state;
 	}
+}
+
+const copyYesterday = (state) => {
+	let toDoLists = cloneDeep(state.toDoLists);
+	let today = state.selectedDate.split("-");
+	let yesterday = new Date(today[0], Number(today[1])-1, today[2], 10, 30, 0);
+	yesterday.setDate(yesterday.getDate() - 1);
+	let dateTaskAndStatus = toDoLists[dateToStr(yesterday)];
+	if (dateTaskAndStatus) {
+		const newTasks = dateTaskAndStatus.tasks.map(element => {
+			const newEl = cloneDeep(element);
+			newEl.completed = false;
+			return newEl;
+		});
+		toDoLists[state.selectedDate] = {tasks: newTasks, status: "fail"};
+	}
+	return updateObject(state, {toDoLists: toDoLists});
+}
+
+const removeAll = (state) => {
+	let toDoLists = {...state.toDoLists};
+	delete toDoLists[state.selectedDate];
+	return updateObject(state, {toDoLists: toDoLists});
 }
 
 const reducer = (state = initialState, action) => {
@@ -127,6 +150,10 @@ const reducer = (state = initialState, action) => {
 			return saveLists(state);
 		case actionTypes.RETRIVE_LISTS:
 			return retriveLists(state);
+		case actionTypes.COPY_YESTERDAY:
+			return copyYesterday(state);
+		case actionTypes.REMOVE_ALL:
+			return removeAll(state);
         default:
             return state;
     }

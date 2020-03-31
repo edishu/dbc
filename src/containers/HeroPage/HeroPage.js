@@ -1,12 +1,14 @@
 // Import important libraries
 import React, {Component, Fragment} from 'react';
-import { Button, Container, Row, Col } from 'react-bootstrap';
+import { Button, Container, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import {connect} from 'react-redux';
 
 // Import user defined components
 import MainCalendar from '../../components/mainCalendar/mainCalendar'; 
 import ToDoList from '../../components/toDoList/toDoList'; 
 import MyModal from '../../components/UI/Modal/modal';
+import classes from './HeroPage.module.css';
+import {changeDateFormat} from '../../shared/utility';
 
 import * as actions from '../../store/actions/index';
 
@@ -62,9 +64,24 @@ class HeroPage extends Component {
                 status: "fail"
             }
         }
+
+        let removeButton = null;
+        if (dateTaskAndStatus.tasks.length !== 0) {
+        removeButton = (<OverlayTrigger 
+                            placement='top'
+                            overlay={
+                            <Tooltip>
+                                Remove All
+                            </Tooltip>
+                        }>
+                            <Button variant="danger" onClick={this.props.onRemoveAll} style={{fontSize: "0.9rem"}}>
+                            X
+                            </Button>
+                        </OverlayTrigger>);}
    
         return (
             <Fragment>
+                <div className={classes.heroPage}>
                 <Container>
                     <MyModal 
                     show={this.state.addingTask || this.state.updatingTask}
@@ -88,32 +105,57 @@ class HeroPage extends Component {
                     }}
                         />
                     
-                    <Row>
-                        <Col sm={4}>
+                    <Row >
+                        {/* Body Left */}
+                        <Col sm={5} className="align-self-top">
+                            <Row className="justify-content-md-center">
+                                <Col sm={{span: 6, offset:3}}>
+                                <h3>{changeDateFormat(this.props.dateSelected)}</h3>
+                                </Col>
+                                <Col >
+                                {removeButton}
+                                </Col>
+                            </Row>
                             <ToDoList 
                             selectedDate={this.props.dateSelected}
                             dateTaskAndStatus={dateTaskAndStatus}
 							updateTask={this.startUpdatingTask}/>
                             <Row>
                                 <Col>
-                                    <Button variant="primary" onClick={this.startAddingTask}>
+                                    <Button variant="outline-secondary" onClick={this.props.onCopyYesterday} style={{fontSize: "0.9rem"}}>
+                                    Copy Yesterday
+                                    </Button>
+                                </Col>
+                                <Col>
+                                    <Button variant="primary" onClick={this.startAddingTask} style={{fontSize: "0.9rem"}}>
                                     Add Task
                                     </Button>
                                 </Col>
                                 <Col>
-                                    <Button variant="success" onClick={this.props.onSaveToDoLists}>
-                                    Save Tasks
+                                    <OverlayTrigger 
+                                    placement='bottom'
+                                    overlay={
+                                        <Tooltip>
+                                          Save All tasks to Local Storage
+                                        </Tooltip>
+                                      }>
+                                    <Button variant="success" onClick={this.props.onSaveToDoLists} style={{fontSize: "0.9rem"}}>
+                                    Save
                                     </Button>
+                                    </OverlayTrigger>
                                 </Col>
                             </Row>
                         </Col>
-                        <Col sm={8}>
+
+                        {/* Body Right */}
+                        <Col sm={7} className="align-items-top">
                             <MainCalendar 
                             dateClicked={this.handleDateClick} 
                             dateSuccessStatus={this.state.dateSuccessStatus}/>
                         </Col>
                     </Row>
                 </Container>
+                </div>
             </Fragment>
         )
     }
@@ -134,6 +176,8 @@ const mapDispatchToProps = dispatch => {
         onTaskRemoved: (removeInfo) => dispatch(actions.removeTask(removeInfo)),
         onSaveToDoLists: () => dispatch(actions.saveLists()),
         onRetriveToDoLists: () => dispatch(actions.retriveLists()),
+        onCopyYesterday: () => dispatch(actions.copyYesterday()),
+        onRemoveAll: () => dispatch(actions.removeAll()),
     };
 };
 

@@ -39,3 +39,15 @@ export const retriveLists = () => {
         type: actionTypes.RETRIVE_LISTS,
     }
 }
+
+export const copyYesterday = () => {
+    return {
+        type: actionTypes.COPY_YESTERDAY,
+    }
+}
+
+export const removeAll = () => {
+    return {
+        type: actionTypes.REMOVE_ALL,
+    }
+}

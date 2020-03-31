@@ -1,5 +1,6 @@
 // Import important libraries
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 // Import FullCalendar modules
 import FullCalendar from '@fullcalendar/react';
@@ -17,7 +18,7 @@ class mainCalender extends Component {
 
     colorDay = (dayRenderInfo) => {
         const status = this.props.dateSuccessStatus[dateToStr(dayRenderInfo.date)];
-        if (status==="fail" && dateToStr(dayRenderInfo.date) !== dateToStr(new Date())) {
+        if (status==="fail" && dateToStr(dayRenderInfo.date) < dateToStr(new Date())) {
             dayRenderInfo.el.classList.add("day-fail");
         } else if (status==="success" && dateToStr(dayRenderInfo.date) === dateToStr(new Date())) {
             dayRenderInfo.el.classList.remove("fc-today");
@@ -32,6 +33,7 @@ class mainCalender extends Component {
             let calendarApi = this.calendarRef.current.getApi()
             calendarApi.next();
             calendarApi.prev();
+            calendarApi.select(this.props.dateSelected);
         }
     }
 
@@ -41,8 +43,13 @@ class mainCalender extends Component {
             <FullCalendar
                 ref={this.calendarRef}
                 dayRender={this.colorDay}
+                header={{
+                    left: 'prev,next ',
+                    center: 'title',
+                    right: 'today'
+                  }}
                 defaultView="dayGridMonth" 
-                plugins={[ dayGridPlugin, interactionPlugin]} 
+                plugins={[ dayGridPlugin, interactionPlugin, ]} 
                 dateClick={this.props.dateClicked}
                 selectable="true"
                 handleWindowResize="true"/>);
@@ -50,4 +57,10 @@ class mainCalender extends Component {
 
 }
 
-export default mainCalender;
+const mapStateToProps = state => {
+    return {
+        dateSelected: state.heroPage.selectedDate,
+    };
+};
+
+export default connect(mapStateToProps)(mainCalender);

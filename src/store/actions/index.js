@@ -4,5 +4,12 @@ export {
 	updateTask,
 	removeTask,
 	saveLists,
-	retriveLists
+	retriveLists,
+	copyYesterday,
+	removeAll,
 } from './heroPage';
+
+export {
+	auth,
+	
+} from './auth';
