@@ -9,7 +9,9 @@ export {
 	removeAll,
 } from './heroPage';
 
-export {
-	auth,
-	
+export  {
+    auth,
+    logout,
+    setAuthRedirectPath,
+    authCheckState
 } from './auth';

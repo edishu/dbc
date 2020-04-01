@@ -7,10 +7,8 @@ class Layout extends Component {
     render () {
         return (
             <Fragment>
-                <NavBar/>
-                <main>
-                    {this.props.children}
-                </main>
+                <NavBar/>         
+                    {this.props.children}            
                 <Footer/>
             </Fragment>
         );
