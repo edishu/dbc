@@ -1,68 +1,34 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# [Don't Break The Chain](https://dbtc-74557.web.app/)
+## Productivity App
 
-## Available Scripts
+Jerry Seinfeld's Productivity Secret [Read full here](https://lifehacker.com/jerry-seinfelds-productivity-secret-281626)
 
-In the project directory, you can run:
+## TL;DR
+Jerry Seinfeld essentially says to write good jokes one needs to write a lot of jokes. To consistently accomplish that take calendar and mark everyday you have been successful. This will make a chain over long period of time. You'll have motivation to continue to stay productive and "Not Breaking The Chain".
 
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## 1. App Description
+  - App allows you to feed in the tasks you wish to accomplish in a day.
+  - If you complete 80% tasks for the day you get "Green" (success) recorded in calendar.
+  - If you fail (complete lesser than 80% of tasks) you get "Red" recorded in calender.
+  - Stay Productive - Keep the green chain alive - Don't Break The Cahin.
+  
+## 2. Tools/Software Used
+  - Javascript/ReactJS
+  - CSS - Flexbox, Grid
+  - Material UI, Bootstrap 4, FullCalendar (Javascript)
+  - Redux, React Hooks, Axios, Routers
+  - Backend: Firebase/Google Cloud Plateform
+  
+## 3. Features of Application
+  ![](readmeFiles/heroScreenLabelled.png)
+  - 1. Select a Day in calendar.
+  - 2. Add Task
+    ![](readmeFiles/addTask.PNG)
+  - 3. Save Task: Saves all the app data on browser LocalStorage, allowing you to work offline and comeback later.
+  - 4. If most of your tasks remain simialr each day, use "Copy yesterday" to avoid to mannually feed details each day.
+  - 5. Button to Remove all the tasks for the day.
+  - 6. Click on any task to update/Remove/Mark Complete: Remember you need to complete 80% tasks to win the day!
+    ![](readmeFiles/updateTask.PNG)
+  - 7. Login/Signup
+    ![](readmeFiles/login.PNG)
+  - 8. Sync to Cloud: Make your progress permanent and accessible from anywhere!
