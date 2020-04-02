@@ -1,3 +1,13 @@
 .myFooter {
     margin-top: 2rem;
 }
+
+.navbarBrand {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.navLink {
+    padding-top: 0.3rem;
+    padding-bottom: 0.2rem;
+}
