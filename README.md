@@ -20,6 +20,20 @@ Jerry Seinfeld essentially says to write good jokes one needs to write a lot of 
   - Backend: Firebase/Google Cloud Plateform
   
 ## 3. Features of Application
+  - Home Screen:
+  ![](readmeFiles/heroScreenLabelled.png)
+  - 1. Select a Day in calendar.
+  - 2. Add Task
+    ![](readmeFiles/addTask.PNG)
+  - 3. Save Task: Saves all the app data on browser LocalStorage, allowing you to work offline and comeback later.
+  - 4. If most of your tasks remain simialr each day, use "Copy yesterday" to avoid to mannually feed details each day.
+  - 5. Button to Remove all the tasks for the day.
+  - 6. Click on any task to update/Remove/Mark Complete: Remember you need to complete 80% tasks to win the day!
+    ![](readmeFiles/updateTask.PNG)
+  - 7. Login/Signup
+    ![](readmeFiles/login.PNG)
+  - 8. Sync to Cloud: Make your progress permanent and accessible from anywhere!
+  
   
   
   
