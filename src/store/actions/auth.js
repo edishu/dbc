@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import * as actionTypes from './actionTypes';
+import {fetchSchedule} from './index';
 
 export const authStart = () => {
     return {
@@ -62,6 +63,7 @@ export const auth = (email, password, isSignUp) => {
             localStorage.setItem('userID', response.data.localId);
             dispatch(authSuccess(response.data.idToken, response.data.localId));
             dispatch(checkAuthTimeout(response.data.expiresIn));
+            dispatch(fetchSchedule(response.data.localId, response.data.idToken));
         })
         .catch(err => {
             dispatch(authFail(err.response.data.error));

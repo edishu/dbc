@@ -5,6 +5,7 @@ import Layout from './components/UI/Layout/Layout';
 import HeroPage from './containers/HeroPage/HeroPage';
 import Logout from './containers/Auth/Logout/Logout';
 import Auth from './containers/Auth/Auth';
+import Sync from './containers/Sync/Sync';
 import { BrowserRouter , Route , Switch, Redirect } from 'react-router-dom';
 import * as actions from './store/actions/index';
 
@@ -14,7 +15,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(`[App.js] ${this.props.isAuthenticated}`);
     let route = (
       <Switch>
         <Route path="/auth" component={Auth}/>
@@ -27,6 +27,7 @@ class App extends Component {
       route = (
         <Switch>
           <Route path="/logout" component={Logout}/>
+          <Route path="/sync" component={Sync}/>
           <Route path="/" component={HeroPage}/>
           <Redirect to="/"/>
         </Switch>

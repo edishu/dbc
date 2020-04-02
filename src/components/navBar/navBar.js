@@ -8,8 +8,10 @@ import { connect } from 'react-redux';
 class NavBar extends Component {
     render() {
         let authNav = <Nav.Link href="/auth">Login/Signup</Nav.Link>;
+        let syncHref = "/auth";
         if(this.props.isAuthenticated) {
             authNav = <Nav.Link href="/logout">Logout</Nav.Link>;
+            syncHref = "/sync";
         }
         return (
             <div className={classes.myNavBar}>
@@ -25,6 +27,7 @@ class NavBar extends Component {
                 </Navbar.Brand> 
                 <Nav className="ml-auto">
                     <Nav.Link href="/">Home</Nav.Link>
+                    <Nav.Link href={syncHref}>Sync to Cloud</Nav.Link>
                     {authNav}
                 </Nav>
             </Navbar>

@@ -13,12 +13,14 @@ import thunk from 'redux-thunk';
 // User defined modules import
 import heroPageReducer from './store/reducers/heroPage';
 import authReducer from './store/reducers/auth';
+import syncReducer from './store/reducers/sync';
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 const rootReducer = combineReducers({
     heroPage: heroPageReducer,
     auth: authReducer,
+    sync: syncReducer,
 });
 
 const myStore = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));

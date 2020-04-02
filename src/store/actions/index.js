@@ -15,3 +15,8 @@ export  {
     setAuthRedirectPath,
     authCheckState
 } from './auth';
+
+export {
+	syncSchedule,
+	fetchSchedule
+} from './sync';

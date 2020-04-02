@@ -15,3 +15,8 @@ export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
 export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
+
+//Sync Actions
+export const SYNC_INIT = 'SYNC_INIT';
+export const SYNC_SUCCESS = 'SYNC_SUCCESS';
+export const SYNC_FAIL = 'SYNC_FAIL';

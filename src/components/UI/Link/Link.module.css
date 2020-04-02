@@ -1,4 +1,4 @@
-.Button {
+.Link {
     background-color: transparent;
     border: none;
     color: white;
@@ -10,12 +10,12 @@
     font-weight: bold;
 }
 
-.Button:disabled {
+.Link:disabled {
     color: #ccc;
     cursor: not-allowed;
 }
 
-.Button:first-of-type {
+.Link:first-of-type {
     margin-left: 0;
     padding-left: 0;
 }

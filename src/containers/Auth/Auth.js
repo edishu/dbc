@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Input from  '../../components/UI/Input/Input';
-import {Link} from '../../components/UI/Button/Button';
 import classes from './Auth.module.css';
 import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
@@ -8,6 +7,8 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import {Redirect} from 'react-router-dom';
 import {updateObject, checkValidity} from '../../shared/utility';
 import Typography from '@material-ui/core/Typography';
+import { Button, Row } from 'react-bootstrap';
+import Link from '@material-ui/core/Link';
 
 class Auth extends Component {
     state = {
@@ -41,11 +42,11 @@ class Auth extends Component {
                 touched: false
             },
         },
-        isSignUp: true
+        isSignUp: false
     }
 
     componentDidMount() {
-        if(!this.props.buildingBurger && this.props.authRedirectPath !== '/') {
+        if(this.props.authRedirectPath !== '/') {
             this.props.onSetAuthRedirectPath();
         }
     }
@@ -123,20 +124,35 @@ class Auth extends Component {
                         </Typography>;
         }
 
+        let authSwitch = "Don't have an account? Sign Up";
+
+        if (this.state.isSignUp) {
+            authSwitch = "Already have an account? Sign in";
+        }
+
         return (
             <div className={classes.Auth}>
-                {authStatus}
+                <div className={classes.AuthStatus}>
+                    {authStatus}
+                </div>
                 {redirect}
                 {errorMessage}
-                <form onSubmit={this.onSubmitHandler}>
-                    {form}
-                    <Link btnType="Success">Submit</Link>
-                </form>
-                <Link 
-                    clicked={this.switchAuthModehandler}
-                    btnType="Danger">
-                    Switch to {this.state.isSignUp ? 'SIGNIN' : 'SIGNUP'}
-                </Link>
+                {form}
+                <Row className="justify-content-center">
+                <Button varient="primary" 
+                        onClick={this.onSubmitHandler}>
+                    Submit
+                </Button>
+                </Row>
+                <Row className="justify-content-center">
+                <div className={classes.LinkCSS}>
+                    <Link href="#" 
+                        variant="body2" 
+                        onClick={this.switchAuthModehandler}>
+                        {authSwitch}
+                    </Link>
+                </div>
+                </Row>
             </div>
         );
     }
