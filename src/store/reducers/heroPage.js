@@ -122,6 +122,13 @@ const copyYesterday = (state) => {
 	if (dateTaskAndStatus) {
 		const newTasks = dateTaskAndStatus.tasks.map(element => {
 			const newEl = cloneDeep(element);
+			newEl.start.setDate(today[2]);
+			newEl.start.setMonth(Number(today[1])-1);
+			newEl.start.setDate(today[2]);
+			newEl.end.setDate(today[2]);
+			newEl.end.setMonth(Number(today[1])-1);
+			newEl.end.setDate(today[2]);
+			console.log(newEl);
 			newEl.completed = false;
 			return newEl;
 		});

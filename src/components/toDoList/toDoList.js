@@ -6,7 +6,15 @@ import classes from './toDoList.module.css';
 import {changeDateFormat} from '../../shared/utility';
 
 const toDoList = (props) => {
-
+    props.dateTaskAndStatus.tasks.sort((a,b) => {
+        if(a.start < b.start) {
+            return -1;
+        } 
+        if(a.start > b.start) {
+            return 1;
+        }
+        return 0;
+    });
     const rows = props.dateTaskAndStatus.tasks.map(task => {
         const startHourRaw = task.start.getHours();
         const endHourRaw = task.end.getHours();
